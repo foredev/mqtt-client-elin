@@ -52,7 +52,7 @@ public class MqttClient : BackgroundService
         foreach (var mqttClient in mqttClients)
         {
             await mqttClient.UnsubscribeAsync(
-                new MqttClientUnsubscribeOptions { TopicFilters = new List<string> { "#" } },
+                new MqttClientUnsubscribeOptions { TopicFilters = new List<string> { "foredev/EnergyReader/#" } },
                 stoppingToken);
             await mqttClient.DisconnectAsync(new MqttClientDisconnectOptions(), stoppingToken);
         }
@@ -73,9 +73,9 @@ public class MqttClient : BackgroundService
                 .Select(value => value.Split('='))
                 .ToDictionary(pair => pair[0], pair => pair[1]);
 
-            var clientId = connectionDictionary["ClientId"] + "-" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            var clientId = $"{connectionDictionary["ClientId"]}-{Guid.NewGuid()}";
             var brokerAddress = connectionDictionary["Host"];
-            var brokerPort = Convert.ToInt32(connectionDictionary["Port"]);
+            var brokerPort = int.Parse(connectionDictionary["Port"]);
             var username = connectionDictionary["Username"];
             var password = connectionDictionary["Password"];
 
@@ -83,8 +83,15 @@ public class MqttClient : BackgroundService
                 .WithClientId(clientId)
                 .WithTcpServer(brokerAddress, brokerPort)
                 .WithCredentials(username, password)
-                .WithKeepAlivePeriod(TimeSpan.FromSeconds(10))
-                .WithTlsOptions(o => { o.UseTls(brokerPort == 8883); })
+                .WithKeepAlivePeriod(TimeSpan.FromSeconds(60))
+                .WithTlsOptions(o =>
+                {
+                    o.UseTls();
+                    o.WithAllowUntrustedCertificates();
+                    o.WithIgnoreCertificateChainErrors();
+                    o.WithIgnoreCertificateRevocationErrors();
+                    o.WithCertificateValidationHandler((_) => true);
+                })
                 .Build();
         }
     }
@@ -124,7 +131,8 @@ public class MqttClient : BackgroundService
 
         mqttClient.ConnectedAsync += async _ =>
         {
-            await mqttClient.SubscribeAsync(new MqttTopicFilterBuilder().WithTopic("#").Build(), stoppingToken);
+            await mqttClient.SubscribeAsync(
+                new MqttTopicFilterBuilder().WithTopic("foredev/EnergyReader/#").Build(), stoppingToken);
         };
 
         while (!stoppingToken.IsCancellationRequested && !mqttClient.IsConnected)
