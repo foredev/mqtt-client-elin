@@ -5,7 +5,7 @@ public class RawEnergyMeterData
     /// <summary>
     /// kW
     /// </summary>
-    public decimal ActiveEnergyOutlet { get; set; }
+    public decimal ActiveEnergyOutlet { get; set; } 
     /// <summary>
     /// kW
     /// </summary>
@@ -13,7 +13,7 @@ public class RawEnergyMeterData
     /// <summary>
     /// W
     /// </summary>
-    public decimal ReactiveEnergyOutlet { get; set; }
+    public decimal ReactiveEnergyOutlet { get; set; } 
     /// <summary>
     /// W
     /// </summary>
@@ -61,7 +61,7 @@ public class RawEnergyMeterData
     /// <summary>
     /// W
     /// </summary>
-    public decimal ReactivePowerOutlet1 { get; set; }
+    public decimal ReactivePowerOutlet1 { get; set; } 
     /// <summary>
     /// W
     /// </summary>
@@ -69,7 +69,7 @@ public class RawEnergyMeterData
     /// <summary>
     /// W
     /// </summary>
-    public decimal ReactivePowerOutlet3 { get; set; }
+    public decimal ReactivePowerOutlet3 { get; set; } 
     /// <summary>
     /// W
     /// </summary>
@@ -89,7 +89,7 @@ public class RawEnergyMeterData
     /// <summary>
     /// Ampere
     /// </summary>
-    public decimal PhaseCurrent1 { get; set; }
+    public decimal PhaseCurrent1 { get; set; } 
     /// <summary>
     /// Volt
     /// </summary>
@@ -97,11 +97,11 @@ public class RawEnergyMeterData
     /// <summary>
     /// Ampere
     /// </summary>
-    public decimal PhaseCurrent2 { get; set; }
+    public decimal PhaseCurrent2 { get; set; } 
     /// <summary>
     /// Volt
     /// </summary>
-    public decimal PhaseVoltage3 { get; set; }
+    public decimal PhaseVoltage3 { get; set; } 
     /// <summary>
     /// Ampere
     /// </summary>
