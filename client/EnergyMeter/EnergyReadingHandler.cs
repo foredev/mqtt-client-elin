@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace client.EnergyMeter;
 
 public interface IEnergyReadingHandler
@@ -36,7 +38,38 @@ public class EnergyReadingHandler : IEnergyReadingHandler
     {
         var data = EnergyMeterDataParser.Parse(payload);
 
-        // ...
+
+
+        if (data.ActivePowerOutlet.ToString() == "0,007")
+        {
+            return Task.CompletedTask;
+        }
+
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine($"Elmätare: {id}]");
+        Console.ForegroundColor = ConsoleColor.White;
+        
+        Console.WriteLine(data.ActivePowerOutlet);
+        Console.WriteLine(data.ActivePowerOutlet1);
+        Console.WriteLine(data.ActivePowerOutlet2);
+        Console.WriteLine(data.ActivePowerOutlet3);
+        //foreach (PropertyInfo property in typeof(RawEnergyMeterData).GetProperties())
+        //{
+
+        //    var value = property.GetValue(data, null);
+
+        //    // Check if the value is not null and not 0
+        //    if (value != null && !value.Equals(decimal.Zero))
+        //    {
+        //        Console.WriteLine($"{property.Name}: {value}");
+        //    }
+
+        //}
+
+        Console.WriteLine(DateTime.Now);
+
+        Console.WriteLine();
+        Console.WriteLine();
 
         return Task.CompletedTask;
     }
