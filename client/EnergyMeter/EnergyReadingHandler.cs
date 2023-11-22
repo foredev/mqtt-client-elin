@@ -38,7 +38,7 @@ public class EnergyReadingHandler : IEnergyReadingHandler
     {
         var data = EnergyMeterDataParser.Parse(payload);
 
-
+        //test
 
         if (data.ActivePowerOutlet.ToString() == "0,007")
         {
