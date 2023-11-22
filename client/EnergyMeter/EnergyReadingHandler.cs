@@ -38,10 +38,7 @@ public class EnergyReadingHandler : IEnergyReadingHandler
     {
         var data = EnergyMeterDataParser.Parse(payload);
 
-        Thread.Sleep(2000);
-        //test
-        Console.WriteLine("test " + data.ActiveEnergyOutlet);
-        if (data.ActivePowerOutlet > 0.007m || data.ActivePowerOutlet.ToString() != "0,007")
+        if (data.ActivePowerOutlet > 0.008m && data.ActivePowerOutlet != 0m)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Elmätare: {id}]");
