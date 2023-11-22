@@ -38,21 +38,26 @@ public class EnergyReadingHandler : IEnergyReadingHandler
     {
         var data = EnergyMeterDataParser.Parse(payload);
 
+        Thread.Sleep(2000);
         //test
-
-        if (data.ActivePowerOutlet.ToString() == "0,007")
+        Console.WriteLine("test " + data.ActiveEnergyOutlet);
+        if (data.ActivePowerOutlet > 0.007m || data.ActivePowerOutlet.ToString() != "0,007")
         {
-            return Task.CompletedTask;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Elmätare: {id}]");
+            Console.ForegroundColor = ConsoleColor.White;
+
+            Console.WriteLine("ActivePowerOutlet  : " + data.ActivePowerOutlet);
+            Console.WriteLine("ActivePowerOutlet 1: " + data.ActivePowerOutlet1);
+            Console.WriteLine("ActivePowerOutlet 2: " + data.ActivePowerOutlet2);
+            Console.WriteLine("ActivePowerOutlet 3: " + data.ActivePowerOutlet3);
+            Console.WriteLine(DateTime.Now);
+
+            Console.WriteLine();
+            Console.WriteLine();
         }
 
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine($"Elmätare: {id}]");
-        Console.ForegroundColor = ConsoleColor.White;
-        
-        Console.WriteLine(data.ActivePowerOutlet);
-        Console.WriteLine(data.ActivePowerOutlet1);
-        Console.WriteLine(data.ActivePowerOutlet2);
-        Console.WriteLine(data.ActivePowerOutlet3);
+
         //foreach (PropertyInfo property in typeof(RawEnergyMeterData).GetProperties())
         //{
 
@@ -66,10 +71,7 @@ public class EnergyReadingHandler : IEnergyReadingHandler
 
         //}
 
-        Console.WriteLine(DateTime.Now);
 
-        Console.WriteLine();
-        Console.WriteLine();
 
         return Task.CompletedTask;
     }
